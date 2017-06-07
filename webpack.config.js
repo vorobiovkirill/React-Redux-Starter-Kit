@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = {
 
-	entry: './src/index.js',
+	entry: './src/scripts/index.js',
 
 	output: {
 		path: path.resolve(__dirname, 'dist'),
@@ -21,6 +21,10 @@ const config = {
 		children: false,
 	},
 
+	resolve: {
+		extensions: ['.js', '.sass', '.scss', '.html']
+	},
+
 	/**
 	 * @link https://webpack.github.io/docs/webpack-dev-server.html
 	 */
@@ -29,6 +33,7 @@ const config = {
 		compress: true,
 		historyApiFallback: true,
 		port: 8080,
+		inline: true,
 		open: true,
 		stats: {
 			colors: true,
@@ -68,13 +73,28 @@ const config = {
 	plugins: [
 
 		new ExtractTextPlugin({
-			filename: 'style.css'
+			filename: 'style.[hash].css'
 		}),
 
 		new HtmlWebpackPlugin({
-			title: 'My React App',
-			template: './src/index.html',
-		})
+			title: 'My React App!!!!',
+			template: './src/index.html.ejs',
+			inject: 'body',
+			minify: {
+				removeComments: true,
+				collapseWhitespace: true,
+				removeRedundantAttributes: true,
+				useShortDoctype: true,
+				removeEmptyAttributes: true,
+				removeStyleLinkTypeAttributes: true,
+				keepClosingSlash: true,
+				minifyJS: true,
+				minifyCSS: true,
+				minifyURLs: true
+			},
+		}),
+
+		new webpack.HotModuleReplacementPlugin()
 	]
 
 };
