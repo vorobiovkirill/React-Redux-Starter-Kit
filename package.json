@@ -1,6 +1,6 @@
 {
   "name": "react-starter-kit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "react-starter-kit",
   "homepage": "https://vorobyovkirill.github.io",
   "author": {
@@ -34,7 +34,9 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.1",
