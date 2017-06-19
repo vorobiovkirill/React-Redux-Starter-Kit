@@ -22,7 +22,7 @@ const config = {
 	},
 
 	resolve: {
-		extensions: ['.js', '.sass', '.scss', '.html']
+		extensions: ['.js', '.jsx', '.sass', '.scss', '.html']
 	},
 
 	/**
@@ -56,9 +56,9 @@ const config = {
 	module: {
 		rules: [
 			{
-				test: /\.js$/,
-				// exlude: /node_modules/,
-				loader: 'babel-loader'
+				test: /\.js?$/,
+				loader: 'babel-loader',
+				exclude: /node_modules/,
 			},
 			{
 				test: /\.(sass|scss|css)$/,

@@ -1,14 +1,13 @@
-import { Link, Route, Router, browserHistory } from 'react-router-dom';
-
-import { App } from './app/App';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { browserHistory } from 'react-router';
+
 import css from '../styles/main.sass';
 
+import Home from './app/home';
+
 ReactDOM.render(
-	<div>
-		<App />
-	</div>,
+  <Home />,
   document.getElementById('root')
 );
 
