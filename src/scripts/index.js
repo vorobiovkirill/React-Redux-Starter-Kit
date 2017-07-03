@@ -1,13 +1,11 @@
+import App from './app/App';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { browserHistory } from 'react-router';
-
+import { ReactRouter } from 'react-router-dom';
 import css from '../styles/main.sass';
 
-import Home from './app/home';
-
 ReactDOM.render(
-  <Home />,
+  <App />,
   document.getElementById('root')
 );
 
