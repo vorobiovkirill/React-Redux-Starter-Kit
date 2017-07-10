@@ -68,6 +68,20 @@ const config = {
 					fallback: 'style-loader'
 				})
 			},
+			{
+				test: /\.html$/,
+				use: 'html-loader'
+			},
+			{
+				test: /\.(jpg|jpeg|gif|png|svg)$/,
+				exclude: /node_modules/,
+				use: 'url-loader?limit=100&name=img/[name].[ext]'
+			},
+			{
+				test: /\.(woff|woff2|eot|ttf|svg)$/,
+				exclude: /node_modules/,
+				use: 'url-loader?limit=1024&name=fonts/[name].[ext]'
+			},
 		]
 	},
 
