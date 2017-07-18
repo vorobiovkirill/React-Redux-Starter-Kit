@@ -1,11 +1,15 @@
+import '../styles/main.sass';
+
+import { BrowserRouter, Link, NavLink, Route, Switch } from 'react-router-dom'
+
 import App from './app/App';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ReactRouter } from 'react-router-dom';
-import css from '../styles/main.sass';
+import styled from 'styled-components';
 
 ReactDOM.render(
-  <App />,
-  document.getElementById('root')
+	<BrowserRouter>
+		<App />
+	</BrowserRouter>,
+	document.getElementById('root')
 );
-

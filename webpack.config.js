@@ -10,7 +10,7 @@ const config = {
 
 	output: {
 		path: path.resolve(__dirname, 'dist'),
-		filename: 'index.bundle.js',
+		filename: 'js/index.bundle.js',
 		publicPath: '/'
 	},
 
@@ -23,6 +23,10 @@ const config = {
 	},
 
 	resolve: {
+		modules: [
+			path.resolve(__dirname, "src"),
+			"node_modules"
+		],
 		extensions: ['.js', '.jsx', '.sass', '.scss', '.html']
 	},
 
@@ -57,7 +61,7 @@ const config = {
 	module: {
 		rules: [
 			{
-				test: /\.js?$/,
+				test: /\.(js|jsx)?$/,
 				loader: 'babel-loader',
 				exclude: /node_modules/,
 			},
@@ -88,7 +92,7 @@ const config = {
 	plugins: [
 
 		new ExtractTextPlugin({
-			filename: 'style.[hash].css'
+			filename: 'css/style.[hash].css'
 		}),
 
 		new HtmlWebpackPlugin({
