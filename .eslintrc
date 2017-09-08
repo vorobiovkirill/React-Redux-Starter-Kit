@@ -23,6 +23,10 @@
 		"jsx": true
 	},
 	"rules": {
+		"no-tabs": 0,
+		"no-unused-vars": 0,
+		"class-methods-use-this": 0,
+		"no-alert": 0,
 		// Soft some rules.
 		"arrow-parens": 0, // Does not work with Flow generic types.
 		"global-require": 0, // Used by webpack isomorphic tools and React Native.

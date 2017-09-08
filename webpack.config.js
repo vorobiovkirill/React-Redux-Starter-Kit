@@ -11,7 +11,7 @@ const config = {
 	output: {
 		path: path.resolve(__dirname, 'dist'),
 		filename: 'js/index.bundle.js',
-		publicPath: '/'
+		publicPath: '/',
 	},
 
 	performance: {
@@ -24,10 +24,10 @@ const config = {
 
 	resolve: {
 		modules: [
-			path.resolve(__dirname, "src"),
-			"node_modules"
+			path.resolve(__dirname, 'src'),
+			'node_modules',
 		],
-		extensions: ['.js', '.jsx', '.sass', '.scss', '.html']
+		extensions: ['.js', '.jsx', '.sass', '.scss', '.html'],
 	},
 
 	/**
@@ -55,7 +55,7 @@ const config = {
 			errorDetails: true,
 			warnings: false,
 			publicPath: false,
-		}
+		},
 	},
 
 	module: {
@@ -69,30 +69,32 @@ const config = {
 				test: /\.(sass|scss|css)$/,
 				use: ExtractTextPlugin.extract({
 					use: ['css-loader', 'sass-loader'],
-					fallback: 'style-loader'
-				})
+					fallback: 'style-loader',
+				}),
 			},
 			{
 				test: /\.html$/,
-				use: 'html-loader'
+				use: 'html-loader',
 			},
 			{
 				test: /\.(jpg|jpeg|gif|png|svg)$/,
 				exclude: /node_modules/,
-				use: 'url-loader?limit=100&name=img/[name].[ext]'
+				use: 'url-loader?limit=100&name=img/[name].[ext]',
 			},
 			{
 				test: /\.(woff|woff2|eot|ttf|svg)$/,
 				exclude: /node_modules/,
-				use: 'url-loader?limit=1024&name=fonts/[name].[ext]'
+				use: 'url-loader?limit=1024&name=fonts/[name].[ext]',
 			},
-		]
+		],
 	},
 
 	plugins: [
 
+		new webpack.optimize.ModuleConcatenationPlugin(),
+
 		new ExtractTextPlugin({
-			filename: 'css/style.[hash].css'
+			filename: 'css/style.[hash].css',
 		}),
 
 		new HtmlWebpackPlugin({
@@ -109,12 +111,12 @@ const config = {
 				keepClosingSlash: true,
 				minifyJS: true,
 				minifyCSS: true,
-				minifyURLs: true
+				minifyURLs: true,
 			},
 		}),
 
-		new webpack.HotModuleReplacementPlugin()
-	]
+		new webpack.HotModuleReplacementPlugin(),
+	],
 
 };
 
