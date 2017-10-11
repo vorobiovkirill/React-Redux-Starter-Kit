@@ -411,7 +411,6 @@ __pycache__/
 # tools/**
 # !tools/packages.config
 
-app/
 build/
 dist/
 resources/

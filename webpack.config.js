@@ -27,7 +27,7 @@ const config = {
 			path.resolve(__dirname, 'src'),
 			'node_modules',
 		],
-		extensions: ['.js', '.jsx', '.sass', '.scss', '.html'],
+		extensions: ['.js', '.jsx', '.css', '.sass', '.scss', '.html'],
 	},
 
 	/**
@@ -68,7 +68,7 @@ const config = {
 			{
 				test: /\.(sass|scss|css)$/,
 				use: ExtractTextPlugin.extract({
-					use: ['css-loader', 'sass-loader'],
+					use: ['css-loader', 'postcss-loader', 'sass-loader'],
 					fallback: 'style-loader',
 				}),
 			},
@@ -77,14 +77,14 @@ const config = {
 				use: 'html-loader',
 			},
 			{
-				test: /\.(jpg|jpeg|gif|png|svg)$/,
+				test: /\.(jpe?g|png|gif|svg)$/,
 				exclude: /node_modules/,
-				use: 'url-loader?limit=100&name=img/[name].[ext]',
+				use: 'file-loader?name=[path][name].[ext]?[hash]',
 			},
 			{
-				test: /\.(woff|woff2|eot|ttf|svg)$/,
+				test: /\.(ico|eot|otf|webp|ttf|woff|woff2)$/i,
 				exclude: /node_modules/,
-				use: 'url-loader?limit=1024&name=fonts/[name].[ext]',
+				use: 'file-loader?limit=100000&name=assets/[name].[hash:8].[ext]',
 			},
 		],
 	},
