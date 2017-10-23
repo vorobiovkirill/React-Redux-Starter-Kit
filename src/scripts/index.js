@@ -11,9 +11,11 @@ import { routerMiddleware } from 'react-router-redux';
 import styled from 'styled-components';
 import thunk from 'redux-thunk';
 
+const ROOT = document.getElementById('root');
+
 ReactDOM.render(
 	<BrowserRouter>
 		<App />
 	</BrowserRouter>,
-	document.getElementById('root'),
+	ROOT,
 );
