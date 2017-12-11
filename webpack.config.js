@@ -6,11 +6,17 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = {
 
-	entry: './src/scripts/index.js',
+	devtool: 'inline-source-map',
+
+	entry: {
+		main: './src/scripts/index.js',
+	},
 
 	output: {
 		path: path.resolve(__dirname, 'dist'),
-		filename: 'js/index.bundle.js',
+		filename: 'js/[name].bundle.js',
+		sourceMapFilename: '[file].map',
+		chunkFilename: '[name].[chunkhash].chunk.js',
 		publicPath: '/',
 	},
 
@@ -27,7 +33,7 @@ const config = {
 			path.resolve(__dirname, 'src'),
 			'node_modules',
 		],
-		extensions: ['.js', '.jsx', '.css', '.sass', '.scss', '.html'],
+		extensions: ['.js', '.jsx', '.json', '.css', '.sass', '.scss', '.html'],
 	},
 
 	/**
@@ -62,14 +68,18 @@ const config = {
 		rules: [
 			{
 				test: /\.(js|jsx)?$/,
-				loader: 'babel-loader',
+				use: 'babel-loader',
 				exclude: /node_modules/,
+			},
+			{
+				test: /\.json$/,
+				use: 'json-loader',
 			},
 			{
 				test: /\.(sass|scss|css)$/,
 				use: ExtractTextPlugin.extract({
-					use: ['css-loader', 'postcss-loader', 'sass-loader'],
 					fallback: 'style-loader',
+					use: ['css-loader', 'postcss-loader', 'sass-loader'],
 				}),
 			},
 			{
@@ -101,18 +111,6 @@ const config = {
 			title: 'My React App!!!!',
 			template: './src/index.html.ejs',
 			inject: 'body',
-			minify: {
-				removeComments: true,
-				collapseWhitespace: true,
-				removeRedundantAttributes: true,
-				useShortDoctype: true,
-				removeEmptyAttributes: true,
-				removeStyleLinkTypeAttributes: true,
-				keepClosingSlash: true,
-				minifyJS: true,
-				minifyCSS: true,
-				minifyURLs: true,
-			},
 		}),
 
 		new webpack.HotModuleReplacementPlugin(),

@@ -1,6 +1,8 @@
 {
 	"plugins": [
-		"lodash"
+		["lodash", {
+			"id": ["lodash", "semantic-ui-react"]
+		}]
 	],
 	"presets": [
 		[
@@ -16,9 +18,13 @@
 	],
 	"env": {
 		"production": {
-			"only": [
-				"app"
-			],
+			"plugins": [
+				"transform-react-remove-prop-types",
+				"transform-react-constant-elements",
+				"transform-react-inline-elements"
+			]
+		},
+		"development": {
 			"plugins": [
 				"transform-react-remove-prop-types",
 				"transform-react-constant-elements",
@@ -28,7 +34,8 @@
 		"test": {
 			"plugins": [
 				"transform-es2015-modules-commonjs",
-				"dynamic-import-node"
+				"dynamic-import-node",
+				"lodash"
 			]
 		}
 	}

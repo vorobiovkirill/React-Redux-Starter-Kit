@@ -1,31 +1,28 @@
-import { BrowserRouter, Link, NavLink, Route, Switch } from 'react-router-dom';
-import { Button, Card, Container, Grid, Header, Icon, Image, Item, Label, Menu } from 'semantic-ui-react';
+import {
+	Container,
+	Grid,
+	Header,
+	Menu,
+} from 'semantic-ui-react';
 import React, { Component } from 'react';
 
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-class App extends Component {
-	render() {
-		return (
-			<Container>
-				<Header as="h1" textAlign="center">Hello World</Header>
-				<Grid columns={3} divided>
-					<Grid.Row>
-						<Grid.Column>
-							Lorem ipsum dolor sit amet.
-								</Grid.Column>
-						<Grid.Column>
-							Lorem ipsum dolor sit amet.
-								</Grid.Column>
-						<Grid.Column>
-							Lorem ipsum dolor sit amet.
-								</Grid.Column>
-					</Grid.Row>
-				</Grid>
-			</Container>
-		);
-	}
-}
+const App = () => {
+	return (
+		<Container>
+			<Menu>
+				<Menu.Item header>Our Company</Menu.Item>
+				<Menu.Item name="menu 1" />
+				<Menu.Item name="menu 2" />
+				<Menu.Item name="menu 3" />
+			</Menu>
+			<Header as="h1">Semantic UI React Fixed Template</Header>
+			<p>This is a basic fixed menu template using fixed size containers.</p>
+			<p>A text container is used for the main container, which is useful for single column layouts.</p>
+		</Container>
+	);
+};
 
 export default App;
