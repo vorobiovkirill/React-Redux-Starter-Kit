@@ -1,8 +1,11 @@
 {
 	"plugins": [
-		["lodash", {
-			"id": ["lodash", "semantic-ui-react"]
-		}]
+		[
+			"lodash",
+			{
+				"id": ["lodash", "semantic-ui-react"]
+			}
+		]
 	],
 	"presets": [
 		[

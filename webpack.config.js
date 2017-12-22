@@ -1,121 +1,25 @@
-const webpack = require('webpack');
-const path = require('path');
+const chalk = require('chalk');
+const args = require('minimist')(process.argv);
 
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const devTools = JSON.parse(args['d'] || false);
+const isForLog = JSON.parse(args['l'] || false);
 
-const config = {
+process.env.NODE_ENV = process.env.NODE_ENV === 'production' ? process.env.NODE_ENV : 'development';
 
-	devtool: 'inline-source-map',
+const config = process.env.NODE_ENV === 'production'
+	? require('./webpack.prod.js')
+	: require('./webpack.dev.js');
 
-	entry: {
-		main: './src/scripts/index.js',
-	},
+const nodeEnv = 'NODE_ENV:' + (process.env.NODE_ENV === 'production'
+	? chalk.bold.red(process.env.NODE_ENV)
+	: chalk.bold.green(process.env.NODE_ENV)
+);
 
-	output: {
-		path: path.resolve(__dirname, 'dist'),
-		filename: 'js/[name].bundle.js',
-		sourceMapFilename: '[file].map',
-		chunkFilename: '[name].[chunkhash].chunk.js',
-		publicPath: '/',
-	},
+const devToolsConsole = `__DEVTOOLS__: ${devTools}`;
 
-	performance: {
-		hints: false,
-	},
-
-	stats: {
-		children: false,
-	},
-
-	resolve: {
-		modules: [
-			path.resolve(__dirname, 'src'),
-			'node_modules',
-		],
-		extensions: ['.js', '.jsx', '.json', '.css', '.sass', '.scss', '.html'],
-	},
-
-	/**
-	 * @link https://webpack.github.io/docs/webpack-dev-server.html
-	 */
-	devServer: {
-		contentBase: path.resolve(__dirname, 'dist'),
-		compress: true,
-		historyApiFallback: true,
-		port: 8080,
-		inline: true,
-		open: true,
-		stats: {
-			colors: true,
-			hash: false,
-			version: false,
-			timings: false,
-			assets: false,
-			chunks: false,
-			modules: false,
-			reasons: false,
-			children: false,
-			source: false,
-			errors: true,
-			errorDetails: true,
-			warnings: false,
-			publicPath: false,
-		},
-	},
-
-	module: {
-		rules: [
-			{
-				test: /\.(js|jsx)?$/,
-				use: 'babel-loader',
-				exclude: /node_modules/,
-			},
-			{
-				test: /\.json$/,
-				use: 'json-loader',
-			},
-			{
-				test: /\.(sass|scss|css)$/,
-				use: ExtractTextPlugin.extract({
-					fallback: 'style-loader',
-					use: ['css-loader', 'postcss-loader', 'sass-loader'],
-				}),
-			},
-			{
-				test: /\.html$/,
-				use: 'html-loader',
-			},
-			{
-				test: /\.(jpe?g|png|gif|svg)$/,
-				exclude: /node_modules/,
-				use: 'file-loader?name=[path][name].[ext]?[hash]',
-			},
-			{
-				test: /\.(ico|eot|otf|webp|ttf|woff|woff2)$/i,
-				exclude: /node_modules/,
-				use: 'file-loader?limit=100000&name=assets/[name].[hash:8].[ext]',
-			},
-		],
-	},
-
-	plugins: [
-
-		new webpack.optimize.ModuleConcatenationPlugin(),
-
-		new ExtractTextPlugin({
-			filename: 'css/style.[hash].css',
-		}),
-
-		new HtmlWebpackPlugin({
-			title: 'My React App!!!!',
-			template: './src/index.html.ejs',
-			inject: 'body',
-		}),
-
-		new webpack.HotModuleReplacementPlugin(),
-	],
-
-};
+if (!isForLog) {
+	console.log(chalk.bold.green(nodeEnv));
+	console.log(chalk.bold.blue(devToolsConsole));
+}
 
 module.exports = config;

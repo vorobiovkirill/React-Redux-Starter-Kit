@@ -3,32 +3,13 @@ const path = require('path');
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ModuleConcatenationPlugin = require('webpack/lib/optimize/ModuleConcatenationPlugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const SimpleProgressPlugin = require('webpack-simple-progress-plugin');
+// const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 const config = {
 
-	devtool: 'source-map',
+	devtool: 'cheap-module-eval-source-map',
 
-	entry: {
-		main: [
-			'babel-polyfill',
-			'./src/scripts/index.js',
-		],
-		vendor: [
-			'react',
-			'redux',
-			'react-redux',
-			'redux-thunk',
-			'lodash',
-			'classnames',
-			'semantic-ui-react',
-			'whatwg-fetch',
-			'prop-types',
-		],
-	},
+	entry: './src/scripts/index.js',
 
 	output: {
 		path: path.resolve(__dirname, 'dist'),
@@ -51,7 +32,35 @@ const config = {
 			path.resolve(__dirname, 'src'),
 			'node_modules',
 		],
-		extensions: ['.js', '.jsx', '.css', '.sass', '.scss', '.html'],
+		extensions: ['.js', '.jsx', '.json', '.css', '.sass', '.scss', '.html'],
+	},
+
+	/**
+	 * @link https://webpack.github.io/docs/webpack-dev-server.html
+	 */
+	devServer: {
+		contentBase: path.resolve(__dirname, 'src'),
+		compress: true,
+		historyApiFallback: true,
+		port: 8080,
+		inline: true,
+		open: true,
+		stats: {
+			colors: true,
+			hash: false,
+			version: false,
+			timings: false,
+			assets: false,
+			chunks: false,
+			modules: false,
+			reasons: false,
+			children: false,
+			source: false,
+			errors: true,
+			errorDetails: true,
+			warnings: false,
+			publicPath: false,
+		},
 	},
 
 	module: {
@@ -60,6 +69,10 @@ const config = {
 				test: /\.(js|jsx)?$/,
 				use: 'babel-loader',
 				exclude: /node_modules/,
+			},
+			{
+				test: /\.json$/,
+				use: 'json-loader',
 			},
 			{
 				test: /\.(sass|scss|css)$/,
@@ -88,9 +101,9 @@ const config = {
 	plugins: [
 
 		/**
-		 * @link https://github.com/hyunchulkwak/webpack-simple-progress-plugin
+		 * @link https://webpack.js.org/plugins/hot-module-replacement-plugin/
 		 */
-		new SimpleProgressPlugin(),
+		new webpack.HotModuleReplacementPlugin(),
 
 		/**
 		 * @link https://webpack.js.org/plugins/no-emit-on-errors-plugin/
@@ -98,13 +111,10 @@ const config = {
 		new webpack.NoEmitOnErrorsPlugin(),
 
 		/**
-		 * @link https://webpack.github.io/docs/list-of-plugins.html#occurrenceorderplugin
+		 * @link https://webpack.js.org/plugins/ignore-plugin/
 		 */
-		new webpack.optimize.OccurrenceOrderPlugin(),
+		new webpack.IgnorePlugin(/\.json$/),
 
-		/**
-		 * @link https://webpack.js.org/plugins/module-concatenation-plugin/
-		 */
 		new webpack.optimize.ModuleConcatenationPlugin(),
 
 		/**
@@ -118,48 +128,23 @@ const config = {
 			title: 'My React App!!!!',
 			template: './src/index.html.ejs',
 			inject: 'body',
-			minify: {
-				removeComments: true,
-				collapseWhitespace: true,
-				removeRedundantAttributes: true,
-				useShortDoctype: true,
-				removeEmptyAttributes: true,
-				removeStyleLinkTypeAttributes: true,
-				keepClosingSlash: true,
-				minifyJS: true,
-				minifyCSS: true,
-				minifyURLs: true,
-			},
 		}),
-
-		/**
-		 * @link https://webpack.js.org/plugins/commons-chunk-plugin/
-		 */
-		new webpack.optimize.CommonsChunkPlugin({
-			name: 'vendor',
-			filename: 'js/vendor.js',
-			minChunks: Infinity,
-			children: true,
-		}),
-
-		/**
-		 * @link http://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin
-		 */
-		new UglifyJsPlugin(),
 
 		/**
 		 * @link https://webpack.js.org/plugins/define-plugin/
 		 */
 		new webpack.DefinePlugin({
-			'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
-			__DEVELOPMENT__: false,
-			__PRODUCTION__: true,
+			'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+			__DEVELOPMENT__: true,
+			__PRODUCTION__: false,
 		}),
 
 		/**
-		 * @link https://github.com/NMFR/optimize-css-assets-webpack-plugin
+		 * @link https://www.npmjs.com/package/open-browser-webpack-plugin
 		 */
-		new OptimizeCssAssetsPlugin(),
+		// new OpenBrowserPlugin({
+		// 	url: 'http://localhost:8080/',
+		// }),
 	],
 
 };
