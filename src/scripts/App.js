@@ -17,45 +17,7 @@ const App = () => {
         <Menu.Item name="menu 3" />
       </Menu>
       <Header as="h1">Semantic UI React Fixed Template</Header>
-      <p className={style.Par}>
-        This is a basic fixed menu template using fixed size containers.
-      </p>
-      <p className={style.Par}>
-        A text container is used for the main container, which is useful for
-        single column layouts.
-      </p>
-      <p className={style.Par}>
-        A text container is used for the main container, which is useful for
-        single column layouts.
-      </p>
-      <p className={style.Par}>
-        A text container is used for the main container, which is useful for
-        single column layouts.
-      </p>
-      <p className={style.Par}>
-        A text container is used for the main container, which is useful for
-        single column layouts.
-      </p>
-      <p>
-        A text container is used for the main container, which is useful for
-        single column layouts.
-      </p>
-      <p>
-        A text container is used for the main container, which is useful for
-        single column layouts.
-      </p>
-      <p>
-        A text container is used for the main container, which is useful for
-        single column layouts.
-      </p>
-      <p>
-        A text container is used for the main container, which is useful for
-        single column layouts.
-      </p>
-      <p>
-        A text container is used for the main container, which is useful for
-        single column layouts.
-      </p>
+	  <h2>TEST</h2>
     </Container>
   );
 };
