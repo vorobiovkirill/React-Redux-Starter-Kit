@@ -3,7 +3,7 @@ const path = require("path");
 
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-// const OpenBrowserPlugin = require('open-browser-webpack-plugin');
+const OpenBrowserPlugin = require("open-browser-webpack-plugin");
 
 const config = {
   mode: "development",
@@ -13,6 +13,7 @@ const config = {
   devtool: "cheap-module-eval-source-map",
 
   entry: [
+    "babel-polyfill",
     "react-hot-loader/patch",
     "webpack-hot-middleware/client?reload=true",
     "./src/index.js"
@@ -71,8 +72,8 @@ const config = {
     rules: [
       {
         test: /\.(js|jsx)?$/,
-        use: "babel-loader",
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        use: "babel-loader"
       },
       {
         test: /\.json$/,
@@ -81,22 +82,20 @@ const config = {
       {
         test: /\.(sass|scss|css)$/,
         use: [
-          //   MiniCssExtractPlugin.loader,
-          {
-            loader: "style-loader",
-            options: {
-              sourceMap: true,
-              hmr: true
-            }
-          },
+          MiniCssExtractPlugin.loader,
+          //   {
+          //     loader: "style-loader",
+          //     options: {
+          //       sourceMap: true,
+          //       hmr: true
+          //     }
+          //   },
           {
             loader: "css-loader",
             options: {
-              importLoaders: 2,
-              minimize: true,
-              sourceMap: "shouldUseSourcsMap",
-              sourceMap: true,
-              localIndentName: "[name]__[local]__[hash:base64:5]"
+              importLoaders: 1,
+              modules: true,
+              localIdentName: "[name]__[local]--[hash:base64:5]"
             }
           },
           {
@@ -131,24 +130,24 @@ const config = {
     ]
   },
 
-  //   optimization: {
-  //     splitChunks: {
-  //       cacheGroups: {
-  //         js: {
-  //           test: /\.(js|jsx)$/,
-  //           name: "commons",
-  //           chunks: "all",
-  //           minChunks: 7
-  //         },
-  //         css: {
-  //           test: /\.(css|sass|scss)$/,
-  //           name: "commons",
-  //           chunks: "all",
-  //           minChunks: 2
-  //         }
-  //       }
-  //     }
-  //   },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        js: {
+          test: /\.(js|jsx)$/,
+          name: "commons",
+          chunks: "all",
+          minChunks: 7
+        },
+        css: {
+          name: "styles",
+          test: /\.(sass|scss|css)$/,
+          chunks: "all",
+          enforce: true
+        }
+      }
+    }
+  },
 
   plugins: [
     /**
@@ -174,15 +173,15 @@ const config = {
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
-      filename: "[name].css",
-      chunkFilename: "[id].css"
+      filename: "css/[name].css"
+      //   chunkFilename: "[id].css"
     }),
 
     new HtmlWebpackPlugin({
       title: "My React App!!!!",
       template: "./src/index.html.ejs",
       inject: "body"
-    })
+    }),
 
     /**
      * @link https://webpack.js.org/plugins/define-plugin/
@@ -196,9 +195,9 @@ const config = {
     /**
      * @link https://www.npmjs.com/package/open-browser-webpack-plugin
      */
-    // new OpenBrowserPlugin({
-    // 	url: 'http://localhost:8080/',
-    // }),
+    new OpenBrowserPlugin({
+      url: "http://localhost:8080/"
+    })
   ]
 };
 

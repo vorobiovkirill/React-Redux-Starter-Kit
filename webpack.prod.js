@@ -14,7 +14,7 @@ const config = {
   devtool: "source-map",
 
   entry: {
-    main: ["babel-polyfill", "./src/index.js"],
+    main: ["./src/index.js"],
     vendor: [
       "react",
       "redux",
@@ -53,28 +53,30 @@ const config = {
     rules: [
       {
         test: /\.(js|jsx)?$/,
-        use: "babel-loader",
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        use: "babel-loader"
       },
       {
         test: /\.(sass|scss|css)$/,
         use: [
-          //   MiniCssExtractPlugin.loader,
-          {
-            loader: "style-loader"
-          },
+          MiniCssExtractPlugin.loader,
+          //   {
+          //     loader: "style-loader"
+          //   },
           {
             loader: "css-loader",
             options: {
-              importLoaders: 2,
-              minimize: true,
-              sourceMap: "shouldUseSourcsMap",
+              importLoaders: 1,
+              modules: true,
               sourceMap: true,
-              localIndentName: "[name]__[local]__[hash:base64:5]"
+              localIdentName: "[name]__[local]--[hash:base64:5]"
             }
           },
           {
-            loader: "postcss-loader"
+            loader: "postcss-loader",
+            options: {
+              sourceMap: true
+            }
           },
           {
             loader: "sass-loader",
@@ -112,10 +114,10 @@ const config = {
           minChunks: 7
         },
         css: {
-          test: /\.(css|sass|scss)$/,
-          name: "commons",
+          name: "styles",
+          test: /\.(sass|scss|css)$/,
           chunks: "all",
-          minChunks: 2
+          enforce: true
         }
       }
     }
@@ -148,8 +150,8 @@ const config = {
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
-      filename: "[name].css",
-      chunkFilename: "[id].css"
+      filename: "css/[name].css"
+      //   chunkFilename: "[id].css"
     }),
 
     new HtmlWebpackPlugin({

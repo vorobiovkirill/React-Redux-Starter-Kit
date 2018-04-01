@@ -1,13 +1,12 @@
-import _ from 'lodash';
+import _ from "lodash";
 
-const initialState = {
-};
+const initialState = {};
 
 const MainReducer = (state = initialState, action) => {
-	switch (action.type) {
-		default:
-			return state;
-	}
+  switch (action.type) {
+    default:
+      return state;
+  }
 };
 
 export default MainReducer;
