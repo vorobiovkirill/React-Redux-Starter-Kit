@@ -130,24 +130,24 @@ const config = {
     ]
   },
 
-  optimization: {
-    splitChunks: {
-      cacheGroups: {
-        js: {
-          test: /\.(js|jsx)$/,
-          name: "commons",
-          chunks: "all",
-          minChunks: 7
-        },
-        css: {
-          name: "styles",
-          test: /\.(sass|scss|css)$/,
-          chunks: "all",
-          enforce: true
-        }
-      }
-    }
-  },
+  //   optimization: {
+  //     splitChunks: {
+  //       cacheGroups: {
+  //         js: {
+  //           test: /\.(js|jsx)$/,
+  //           name: "commons",
+  //           chunks: "all",
+  //           minChunks: 2
+  //         },
+  //         css: {
+  //           name: "styles",
+  //           test: /\.(sass|scss|css)$/,
+  //           chunks: "all",
+  //           enforce: true
+  //         }
+  //       }
+  //     }
+  //   },
 
   plugins: [
     /**

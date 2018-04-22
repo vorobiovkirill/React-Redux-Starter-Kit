@@ -4,7 +4,6 @@ const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ModuleConcatenationPlugin = require("webpack/lib/optimize/ModuleConcatenationPlugin");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const SimpleProgressPlugin = require("webpack-simple-progress-plugin");
 
@@ -16,10 +15,16 @@ const config = {
   entry: {
     main: ["./src/index.js"],
     vendor: [
+      "babel-polyfill",
       "react",
       "redux",
       "react-redux",
+      "redux-saga",
+      "redux-immutable",
+      "immutable",
       "redux-thunk",
+      "recompose",
+      "reselect",
       "lodash",
       "classnames",
       "semantic-ui-react",
@@ -32,7 +37,7 @@ const config = {
     path: path.resolve(__dirname, "dist"),
     filename: "js/[name].bundle.js",
     sourceMapFilename: "[file].map",
-    chunkFilename: "[name].[chunkhash].chunk.js",
+    chunkFilename: "js/[id].chunk.js?[hash]",
     publicPath: "/"
   },
 
@@ -106,12 +111,18 @@ const config = {
 
   optimization: {
     splitChunks: {
+      chunks: "async",
+      minSize: 30000,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      automaticNameDelimiter: "~",
+      name: true,
       cacheGroups: {
-        js: {
-          test: /\.(js|jsx)$/,
-          name: "commons",
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendors",
           chunks: "all",
-          minChunks: 7
+          minChunks: 2
         },
         css: {
           name: "styles",
@@ -121,6 +132,22 @@ const config = {
         }
       }
     }
+    // splitChunks: {
+    //   cacheGroups: {
+    //     vendor: {
+    //       test: /\.(js|jsx)$/,
+    //       name: "vendors",
+    //       chunks: "all",
+    //       minChunks: 2
+    //     },
+    //     css: {
+    //       name: "styles",
+    //       test: /\.(sass|scss|css)$/,
+    //       chunks: "all",
+    //       enforce: true
+    //     }
+    //   }
+    // }
   },
 
   plugins: [
@@ -130,19 +157,9 @@ const config = {
     new SimpleProgressPlugin(),
 
     /**
-     * @link https://webpack.js.org/plugins/no-emit-on-errors-plugin/
-     */
-    new webpack.NoEmitOnErrorsPlugin(),
-
-    /**
      * @link https://webpack.github.io/docs/list-of-plugins.html#occurrenceorderplugin
      */
     new webpack.optimize.OccurrenceOrderPlugin(),
-
-    /**
-     * @link https://webpack.js.org/plugins/module-concatenation-plugin/
-     */
-    new webpack.optimize.ModuleConcatenationPlugin(),
 
     /**
      * @link https://github.com/webpack-contrib/mini-css-extract-plugin
@@ -183,26 +200,21 @@ const config = {
     // }),
 
     /**
-     * @link http://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin
-     */
-    // new UglifyJsPlugin(),
-
-    /**
-     * @link https://webpack.js.org/plugins/define-plugin/
-     */
-    // new webpack.DefinePlugin({
-    //   "process.env.NODE_ENV": JSON.stringify(
-    //     process.env.NODE_ENV || "production"
-    //   ),
-    //   __DEVELOPMENT__: false,
-    //   __PRODUCTION__: true
-    // }),
-
-    /**
      * @link https://github.com/NMFR/optimize-css-assets-webpack-plugin
      */
     new OptimizeCssAssetsPlugin()
-  ]
+  ],
+
+  // Do not replace node globals with polyfills
+  // https://webpack.js.org/configuration/node/
+  node: {
+    console: false,
+    global: false,
+    process: false,
+    Buffer: false,
+    __filename: false,
+    __dirname: false
+  }
 };
 
 module.exports = config;
