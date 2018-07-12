@@ -43,30 +43,30 @@ const config = {
   /**
    * @link https://webpack.github.io/docs/webpack-dev-server.html
    */
-  // devServer: {
-  // 	contentBase: path.resolve(__dirname, 'src'),
-  // 	compress: true,
-  // 	historyApiFallback: true,
-  // 	port: 8080,
-  // 	inline: true,
-  // 	open: true,
-  // 	stats: {
-  // 		colors: true,
-  // 		hash: false,
-  // 		version: false,
-  // 		timings: false,
-  // 		assets: false,
-  // 		chunks: false,
-  // 		modules: false,
-  // 		reasons: false,
-  // 		children: false,
-  // 		source: false,
-  // 		errors: true,
-  // 		errorDetails: true,
-  // 		warnings: false,
-  // 		publicPath: false,
-  // 	},
-  // },
+  devServer: {
+    contentBase: path.resolve(__dirname, "src"),
+    compress: true,
+    historyApiFallback: true,
+    port: 8080,
+    inline: true,
+    open: true,
+    stats: {
+      colors: true,
+      hash: false,
+      version: false,
+      timings: false,
+      assets: false,
+      chunks: false,
+      modules: false,
+      reasons: false,
+      children: false,
+      source: false,
+      errors: true,
+      errorDetails: true,
+      warnings: false,
+      publicPath: false
+    }
+  },
 
   module: {
     rules: [

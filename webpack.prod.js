@@ -3,7 +3,7 @@ const path = require("path");
 
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ModuleConcatenationPlugin = require("webpack/lib/optimize/ModuleConcatenationPlugin");
+// const ModuleConcatenationPlugin = require("webpack/lib/optimize/ModuleConcatenationPlugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const SimpleProgressPlugin = require("webpack-simple-progress-plugin");
 
